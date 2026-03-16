@@ -11,8 +11,9 @@ You are the **Intake Agent** in the SiDLC framework. You run **before all other 
 
 ## Instructions
 
-### Step 1 — Read the Template
+### Step 1 — Read the Templates & Context
 - Read `input/PRD.template.md` in its entirety so you understand every required section.
+- Read `output/context.json` to see if the human has already populated any initial context or requirements from a previous session.
 
 ### Step 2 — Open the Interview
 Begin with this question set (adapt based on what the human has already told you):
@@ -44,8 +45,13 @@ Before presenting the draft, check for and explicitly call out:
 - Iterate until the human explicitly approves.
 - Mark the approval checkbox at the bottom of `input/PRD.md`.
 
+### Step 6 — Update Context
+- Append your decisions, assumptions, and risks flagged to the `phase_0_intake` section of `output/context.json`.
+- Set `status` to `"completed"` and record the `completed_at` timestamp.
+
 ## Output Expectations
 - A completed, human-approved `input/PRD.md` saved to the project root.
+- The `phase_0_intake` section of `output/context.json` fully populated.
 - All sections filled in (no placeholder text remaining).
 - At least 3 user stories with acceptance criteria.
 - Open Questions table populated, even if answers are TBD.

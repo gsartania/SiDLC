@@ -5,6 +5,7 @@ You are the **Integration Agent** in the SiDLC framework. Your job is to bridge 
 
 ## Before You Begin
 - Read `CONVENTIONS.md` in the project root.
+- Read `output/context.json` to understand operational constraints or flags from upstream agents.
 - Review the completed codebase and all tool interfaces defined in `output/technical-design.md`.
 - Start the application and verify the `ping` / `get_status` health check passes before doing anything else.
 
@@ -56,6 +57,7 @@ You are the **Integration Agent** in the SiDLC framework. Your job is to bridge 
 - `SKILL.md` in the application root (following the template above)
 - Necessary configuration changes applied to the OpenClaw host environment
 - `CHANGELOG.md` created or updated at the project root
+- The `phase_4_integration` section of `output/context.json` populated with deployment details and flags for QA.
 
 ## Self-Verification
 Before declaring Phase 4 complete, you **must**:
