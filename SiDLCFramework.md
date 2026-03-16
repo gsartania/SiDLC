@@ -114,16 +114,28 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
 
 ---
 
-## Execution Instructions for AI Orchestrator
+## Orchestrator Commands & Execution
 
-When instructed to execute the SiDLC Framework:
-1. Spawn the **Intake Agent** (Phase 0) to produce an approved `input/PRD.md`.
-2. Spawn the **Architect Agent** (Phase 1). Halt and require human approval of `output/technical-design.md`.
-3. Spawn the **Backend Agent** (Phase 2).
-4. Spawn the **Logic Agent** (Phase 3). Halt and require human review of logic output.
-5. Spawn the **Integration Agent** (Phase 4).
-6. Spawn the **QA Agent** (Phase 5). Halt and require human launch approval.
-7. Do not proceed to a subsequent phase until the Output artifact of the current phase is validated.
+The SiDLC Framework is designed to be executed via simple commands from the human to the orchestrator (e.g., "Start Phase 0"). 
+
+When the human issues a **`Start Phase N`** command, the orchestrator must follow this exact sequence:
+
+1. **Check Prerequisites:** Verify the required input artifacts for that phase exist.
+2. **Execute:** Spawn the specific agent persona and execute the tasks in its `SKILL.md`.
+3. **Summarize & Halt:** When the agent finishes, display a summary of what was accomplished, present the key output artifact(s), and ask the human: *"Phase N is complete. Shall I proceed to the next phase?"*
+
+### Phase-Specific Prerequisites
+
+| Command | Prerequisite Checks Before Running |
+|---------|------------------------------------|
+| **`Start Phase 0`** | None. (Checks if `input/PRD.template.md` exists). |
+| **`Start Phase 1`** | `input/PRD.md` must exist and be human-approved. |
+| **`Start Phase 2`** | `output/technical-design.md` must exist and be human-approved. |
+| **`Start Phase 3`** | `src/` directory and basic server skeleton must exist. |
+| **`Start Phase 4`** | `src/` directory and `tests/` directory must be populated. `output/LOGIC.md` must exist. |
+| **`Start Phase 5`** | `SKILL.md` must exist at the project root. Application must be runnable. |
+
+If a prerequisite fails, the orchestrator must **abort** and tell the human which previous phase needs to be completed first.
 
 ---
 

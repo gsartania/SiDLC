@@ -96,23 +96,20 @@ cp input/PRD.template.md input/PRD.md
 
 ### 2. Run the Framework
 
-Instruct your AI orchestrator:
+Instruct your AI orchestrator using simple commands:
 
-> *"Execute the SiDLC Framework using the PRD at `input/PRD.md`."*
+> *"Start Phase 0"*
 
 The orchestrator will:
-1. Validate the PRD (or spawn the Intake Agent to create one)
-2. Spawn each specialist agent in sequence
-3. Pause at each ⛔ HALT checkpoint for your approval
-4. Produce a tested, deployed application
+1. Check prerequisites (e.g., does `output/technical-design.md` exist for Phase 2?)
+2. Spawn the specific specialist agent for that phase.
+3. Automatically manage the shared `output/context.json` file.
+4. When finished, show you a summary of what was built and ask:
+   *"Phase complete. Shall I proceed to the next phase?"*
 
-### 3. Approve at Checkpoints
+### 3. Approve and Continue
 
-You'll be asked to review and approve:
-- **PRD** — Does this capture what you want?
-- **Technical Design** — Does the architecture look right?
-- **Logic** — Does the implementation match intent?
-- **Test Report** — Ready to launch?
+After reviewing the summary and the generated artifacts, you either approve and say **"Yes, start the next phase"**, or you provide feedback for the agent to fix before moving on.
 
 ---
 
