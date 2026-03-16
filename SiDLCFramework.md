@@ -22,7 +22,7 @@ This document defines the SiDLC (Silvia Software Development Life Cycle), a mult
 Phase 0: input/PRD.md  ───────────────────────────────► HALT: Human Approves PRD
      │
      ▼
-Phase 1: technical-design.md  ─────────────────────► HALT: Human Approves Design
+Phase 1: output/technical-design.md  ──────────────► HALT: Human Approves Design
      │
      ▼
 Phase 2: Baseline Server Code (runs, connects to DB)
@@ -59,12 +59,12 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
   2. Design API or MCP Tool Interfaces (JSON schemas for inputs/outputs).
   3. Define an **error state catalog** — all errors each tool can return.
   4. Map out the internal architecture and data flow.
-- **Output:** `technical-design.md`
-- **⛔ HALT:** Human must approve `technical-design.md` before proceeding.
+- **Output:** `output/technical-design.md`
+- **⛔ HALT:** Human must approve `output/technical-design.md` before proceeding.
 
 ### Phase 2: Core Infrastructure
 - **Actor:** Backend Agent
-- **Input:** `technical-design.md`, `CONVENTIONS.md`
+- **Input:** `output/technical-design.md`, `CONVENTIONS.md`
 - **Tasks:**
   1. Initialize the project repository (e.g., `package.json`, `tsconfig.json`).
   2. Create `.env.example` with all required environment variables documented.
@@ -81,8 +81,8 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
   2. Implement AI parsing algorithms or advanced data transformations.
   3. Wire the business logic into the API/MCP interfaces created in Phase 2.
   4. Write unit tests for all service functions.
-  5. Handle all error states defined in `technical-design.md`.
-- **Output:** Completed `src/` directory + `tests/` + `LOGIC.md` (design rationale).
+  5. Handle all error states defined in `output/technical-design.md`.
+- **Output:** Completed `src/` directory + `tests/` + `output/LOGIC.md` (design rationale).
 - **⛔ HALT:** Human reviews the completed logic and signs off before integration.
 
 ### Phase 4: Integration & Skill Wiring
@@ -98,7 +98,7 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
 
 ### Phase 5: Quality Assurance & Launch
 - **Actor:** QA Agent
-- **Input:** Running software, `SKILL.md`, `input/PRD.md`, `technical-design.md`.
+- **Input:** Running software, `SKILL.md`, `input/PRD.md`, `output/technical-design.md`.
 - **Tasks:**
   1. Test the health check tool first.
   2. Execute end-to-end user stories defined in the PRD.
@@ -115,7 +115,7 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
 
 When instructed to execute the SiDLC Framework:
 1. Spawn the **Intake Agent** (Phase 0) to produce an approved `input/PRD.md`.
-2. Spawn the **Architect Agent** (Phase 1). Halt and require human approval of `technical-design.md`.
+2. Spawn the **Architect Agent** (Phase 1). Halt and require human approval of `output/technical-design.md`.
 3. Spawn the **Backend Agent** (Phase 2).
 4. Spawn the **Logic Agent** (Phase 3). Halt and require human review of logic output.
 5. Spawn the **Integration Agent** (Phase 4).
@@ -132,7 +132,7 @@ If the **QA Agent rejects** the build, follow this protocol:
 |---|---|
 | Logic/business rule bug | Re-spawn **Logic Agent** with QA report as input |
 | Infrastructure/DB bug | Re-spawn **Backend Agent** with QA report as input |
-| Design flaw (wrong schema/interface) | Re-spawn **Architect Agent**; require human re-approval of `technical-design.md` |
+| Design flaw (wrong schema/interface) | Re-spawn **Architect Agent**; require human re-approval of `output/technical-design.md` |
 | Application won't start | **Escalate to human immediately** — do not attempt to auto-fix |
 
 > **Max retry limit:** 2 loops per phase. If a bug persists after 2 attempts, escalate to the human and halt.

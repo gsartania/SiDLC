@@ -83,7 +83,7 @@ project-root/
 - **Never throw untyped errors.** Always throw structured errors with a `code` and `message`.
 - **Log errors with context:** include the function name, input params (sanitized), and timestamp.
 - **All API/MCP tools must return a typed error response**, never crash the server.
-- Define all possible error states in `technical-design.md` before implementing.
+- Define all possible error states in `output/technical-design.md` before implementing.
 
 **TypeScript pattern:**
 ```ts

@@ -1,0 +1,173 @@
+# SiDLC Framework
+
+> **Silvia AI Software Development Life Cycle** — A multi-agent framework for building software with AI, collaboratively and iteratively.
+
+[![Version](https://img.shields.io/badge/version-2.0-blue.svg)]()
+[![License](https://img.shields.io/badge/license-MIT-green.svg)]()
+[![Agents](https://img.shields.io/badge/agents-6-orange.svg)]()
+
+---
+
+## What Is SiDLC?
+
+SiDLC is a **structured, phased framework** that orchestrates multiple specialized AI agents to build software from a rough idea to a tested, deployable product. It is designed for use with advanced LLMs (Claude, Gemini, GPT-4) operating as an orchestrator — particularly within the [OpenClaw](https://github.com/gsartania) environment.
+
+**Ideal for building:**
+- 🔌 MCP (Model Context Protocol) servers
+- ⚡ Micro-apps and CLI tools
+- 🔄 Background services and scheduled tasks
+
+---
+
+## Core Principles
+
+| Principle | Description |
+|-----------|------------|
+| 🧑‍💼 **Human-in-the-Loop** | The human is the Product Owner. Key artifacts require explicit approval before the pipeline advances. |
+| 🤖 **Agent Specialization** | Each phase is handled by a dedicated agent with a narrow scope — reducing hallucination and improving quality. |
+| 📄 **Artifact-Driven** | Every phase produces a concrete, verifiable deliverable. No phase starts until the previous one is validated. |
+
+---
+
+## The Pipeline
+
+```
+ ┌─────────────┐
+ │  Human Idea  │
+ └──────┬───────┘
+        ▼
+ Phase 0 ─── Intake Agent ────────► input/PRD.md           ⛔ HALT: Human Approves
+        ▼
+ Phase 1 ─── Architect Agent ─────► output/technical-design.md  ⛔ HALT: Human Approves
+        ▼
+ Phase 2 ─── Backend Agent ───────► Server Skeleton + DB
+        ▼
+ Phase 3 ─── Logic Agent ─────────► Completed src/ + tests ⛔ HALT: Human Reviews
+        ▼
+ Phase 4 ─── Integration Agent ───► SKILL.md + configs
+        ▼
+ Phase 5 ─── QA Agent ────────────► test-report.md         ⛔ HALT: Human Launches
+```
+
+### Phase Details
+
+| Phase | Agent | Key Output | Human Approval? |
+|-------|-------|-----------|:-:|
+| 0 — Intake | Intake Agent | `input/PRD.md` | ✅ |
+| 1 — Design | Architect Agent | `output/technical-design.md` | ✅ |
+| 2 — Infrastructure | Backend Agent | Server code, DB, health check | — |
+| 3 — Logic | Logic Agent | Business logic, tests, `output/LOGIC.md` | ✅ |
+| 4 — Integration | Integration Agent | `SKILL.md`, `CHANGELOG.md` | — |
+| 5 — QA | QA Agent | `test-report.md` | ✅ |
+
+---
+
+## Repository Structure
+
+```
+SiDLCFramework/
+├── SiDLCFramework.md          # The master framework specification
+├── CONVENTIONS.md             # Shared coding standards for all agents
+├── input/
+│   └── PRD.template.md        # Reusable PRD starter template
+├── output/                    # Agent-generated design artifacts
+│   ├── technical-design.md    # (Architect Agent output)
+│   └── LOGIC.md               # (Logic Agent output)
+└── Skills/
+    ├── intake/SKILL.md        # Phase 0 — Requirements gathering
+    ├── architect/SKILL.md     # Phase 1 — Technical design
+    ├── backend/SKILL.md       # Phase 2 — Infrastructure setup
+    ├── logic/SKILL.md         # Phase 3 — Business logic
+    ├── integration/SKILL.md   # Phase 4 — Skill wiring & deployment
+    └── qa/SKILL.md            # Phase 5 — Quality assurance
+```
+
+---
+
+## Quick Start
+
+### 1. Start with a PRD
+
+Copy the template and fill it in (or let the Intake Agent help you):
+
+```bash
+cp input/PRD.template.md input/PRD.md
+```
+
+### 2. Run the Framework
+
+Instruct your AI orchestrator:
+
+> *"Execute the SiDLC Framework using the PRD at `input/PRD.md`."*
+
+The orchestrator will:
+1. Validate the PRD (or spawn the Intake Agent to create one)
+2. Spawn each specialist agent in sequence
+3. Pause at each ⛔ HALT checkpoint for your approval
+4. Produce a tested, deployed application
+
+### 3. Approve at Checkpoints
+
+You'll be asked to review and approve:
+- **PRD** — Does this capture what you want?
+- **Technical Design** — Does the architecture look right?
+- **Logic** — Does the implementation match intent?
+- **Test Report** — Ready to launch?
+
+---
+
+## Error Recovery
+
+If the QA Agent finds bugs, the framework automatically routes fixes to the right agent:
+
+| Failure Type | Routed To |
+|---|---|
+| Business logic bug | Logic Agent |
+| Infrastructure / DB bug | Backend Agent |
+| Design flaw | Architect Agent → requires human re-approval |
+| App won't start | 🚨 Escalated to human |
+
+> **Max retries:** 2 per phase before escalating to the human.
+
+---
+
+## Conventions
+
+All agents follow shared standards defined in [`CONVENTIONS.md`](CONVENTIONS.md):
+
+- **Languages:** TypeScript (default) or Python
+- **Libraries:** `better-sqlite3`, `zod`, `vitest`, `@modelcontextprotocol/sdk`
+- **Code style:** No `any`, named exports, structured errors, explicit return types
+- **Testing:** Unit tests required for all service functions
+- **Naming:** `kebab-case` files, `PascalCase` classes, `snake_case` DB tables and MCP tools
+
+---
+
+## Designed For
+
+| Environment | Why |
+|------------|-----|
+| **OpenClaw** | Native integration — agents are spawned as OpenClaw skills |
+| **Claude / Gemini / GPT-4** | SKILL files are LLM-optimized prompts |
+| **Human developers** | Clear artifacts, checkpoints, and conventions make the process auditable |
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feat/your-improvement`
+3. Follow the commit conventions in `CONVENTIONS.md`
+4. Submit a pull request with a clear description
+
+---
+
+## License
+
+This project is open source under the [MIT License](LICENSE).
+
+---
+
+<p align="center">
+  <em>Built for AI agents. Controlled by humans.</em>
+</p>
