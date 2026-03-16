@@ -1,0 +1,55 @@
+{
+  "project_name": "",
+  "created_at": "",
+  "last_updated": "",
+  "phases": {
+    "phase_0_intake": {
+      "status": "pending",
+      "completed_at": null,
+      "decisions": [],
+      "assumptions": [],
+      "flags": [],
+      "notes": ""
+    },
+    "phase_1_architect": {
+      "status": "pending",
+      "completed_at": null,
+      "decisions": [],
+      "assumptions": [],
+      "flags": [],
+      "notes": ""
+    },
+    "phase_2_backend": {
+      "status": "pending",
+      "completed_at": null,
+      "decisions": [],
+      "assumptions": [],
+      "flags": [],
+      "notes": ""
+    },
+    "phase_3_logic": {
+      "status": "pending",
+      "completed_at": null,
+      "decisions": [],
+      "assumptions": [],
+      "flags": [],
+      "notes": ""
+    },
+    "phase_4_integration": {
+      "status": "pending",
+      "completed_at": null,
+      "decisions": [],
+      "assumptions": [],
+      "flags": [],
+      "notes": ""
+    },
+    "phase_5_qa": {
+      "status": "pending",
+      "completed_at": null,
+      "decisions": [],
+      "assumptions": [],
+      "flags": [],
+      "notes": ""
+    }
+  }
+}

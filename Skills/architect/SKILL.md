@@ -46,5 +46,8 @@ interface CreateTaskOutput {
 // Errors: VALIDATION_ERROR (invalid input), DB_ERROR (write failed)
 ```
 
+## Escalation
+If you are unable to resolve a design ambiguity after **5 attempts** to clarify with the human, document all options considered and escalate to the orchestrator with a recommendation.
+
 ## Handoff
 Once `output/technical-design.md` is complete, present it to the human and request approval. Do not hand off to the Backend Agent until approval is received.

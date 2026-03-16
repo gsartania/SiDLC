@@ -72,6 +72,7 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
   4. Construct the server entry point (e.g., MCP server instance).
   5. Implement a `ping` / `get_status` health check tool.
 - **Output:** Functional baseline server code (runs without crashing, connects to DB, health check passes).
+- **Self-Verification:** The Backend Agent must start the server and confirm the health check responds before handoff.
 
 ### Phase 3: Business Logic & Intelligence
 - **Actor:** Logic Agent
@@ -83,6 +84,7 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
   4. Write unit tests for all service functions.
   5. Handle all error states defined in `output/technical-design.md`.
 - **Output:** Completed `src/` directory + `tests/` + `output/LOGIC.md` (design rationale).
+- **Self-Verification:** The Logic Agent must run all tests and confirm they pass before handoff.
 - **⛔ HALT:** Human reviews the completed logic and signs off before integration.
 
 ### Phase 4: Integration & Skill Wiring
@@ -95,6 +97,7 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
   4. Verify the MCP server or API is reachable end-to-end.
   5. Create or update `CHANGELOG.md`.
 - **Output:** `SKILL.md`, deployment scripts/configs, `CHANGELOG.md`.
+- **Self-Verification:** The Integration Agent must verify end-to-end reachability before handoff.
 
 ### Phase 5: Quality Assurance & Launch
 - **Actor:** QA Agent
@@ -137,8 +140,92 @@ If the **QA Agent rejects** the build, follow this protocol:
 
 > **Max retry limit:** 2 loops per phase. If a bug persists after 2 attempts, escalate to the human and halt.
 
+### Intermediate Recovery
+
+Error recovery is not limited to Phase 5. If **any agent** produces output that fails self-verification (e.g., server won't start, tests fail), the orchestrator should:
+1. Re-attempt the current phase once with the error output as context.
+2. If the second attempt fails, escalate to the human before proceeding.
+
+---
+
+## Agent Budget & Escalation
+
+To prevent agents from looping indefinitely on difficult sub-tasks:
+
+- **Attempt limit:** If an agent has made **5 or more failed attempts** at a single sub-task (e.g., fixing a compilation error, resolving a test failure), it must **halt and escalate to the human** with a clear summary of what was tried and what failed.
+- **Scope guard:** If an agent discovers that completing its phase requires changes outside its defined scope (e.g., the Logic Agent needs to change the database schema), it must **not make those changes**. Instead, document the issue and escalate to the orchestrator for re-routing.
+
 ---
 
 ## Required Reading Per Agent
 
 All agents must read `CONVENTIONS.md` before beginning their phase. This file defines shared coding standards, preferred libraries, naming conventions, and error handling patterns.
+
+---
+
+## Agent Context Passing
+
+A shared context file (`output/context.json`) enables downstream agents to understand decisions, assumptions, and flags raised by upstream agents. This creates a persistent memory across the pipeline.
+
+### How It Works
+
+1. At the start of a project, the orchestrator copies `output/context.template.json` → `output/context.json`.
+2. Each agent **reads** the full `output/context.json` before starting its phase to understand prior decisions.
+3. Each agent **appends** to its own phase section upon completion — recording decisions made, assumptions taken, and any flags for downstream agents.
+4. Agents must **never modify** another agent's phase section.
+
+### What Each Agent Records
+
+Each phase section contains:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `status` | string | `"pending"`, `"in_progress"`, `"completed"`, or `"failed"` |
+| `completed_at` | string \| null | ISO 8601 timestamp when the phase finished |
+| `decisions` | array of strings | Key choices made (e.g., `"Used SQLite WAL mode for concurrent reads"`) |
+| `assumptions` | array of strings | Things assumed without explicit confirmation (e.g., `"Default timezone is UTC"`) |
+| `flags` | array of strings | Warnings or notes for downstream agents (e.g., `"The tasks table has no soft-delete — QA should test permanent deletion"`) |
+| `notes` | string | Free-form context for the next agent |
+
+### Example
+
+```json
+{
+  "project_name": "SilviaTasks",
+  "created_at": "2026-03-16T10:00:00Z",
+  "last_updated": "2026-03-16T14:30:00Z",
+  "phases": {
+    "phase_0_intake": {
+      "status": "completed",
+      "completed_at": "2026-03-16T10:15:00Z",
+      "decisions": [
+        "Target user is a single power-user, not a team",
+        "Offline-first, no cloud sync in v1"
+      ],
+      "assumptions": [
+        "User is on macOS"
+      ],
+      "flags": [
+        "The user mentioned 'recurring tasks' but this was moved to Out of Scope"
+      ],
+      "notes": "PRD approved without changes on first pass."
+    },
+    "phase_1_architect": {
+      "status": "completed",
+      "completed_at": "2026-03-16T11:00:00Z",
+      "decisions": [
+        "Used SQLite with WAL mode for concurrent reads",
+        "Designed 3 MCP tools: create_task, list_tasks, complete_task"
+      ],
+      "assumptions": [
+        "Max 10,000 tasks per database — no pagination needed in v1"
+      ],
+      "flags": [
+        "The tasks table uses hard deletes — QA should verify no orphaned references"
+      ],
+      "notes": ""
+    }
+  }
+}
+```
+

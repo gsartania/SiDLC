@@ -29,7 +29,7 @@ Begin with this question set (adapt based on what the human has already told you
 - Fill in `input/PRD.md` section by section based on the human's answers.
 - Write user stories yourself based on the stated goals — then confirm them with the human.
 - Set `Priority` in the Functional Requirements table (Must Have / Should Have / Nice to Have).
-- If any technical constraint is unclear, default to: TypeScript, SQLite, MCP server interface, local-first. Note the assumption in **Open Questions**.
+- If any technical constraint is unclear, **first check for existing project files** (e.g., `package.json`, `requirements.txt`, `tsconfig.json`) that indicate an established tech stack. Only if no existing project is found, default to: TypeScript, SQLite, MCP server interface, local-first. Note any assumption in **Open Questions**.
 
 ### Step 4 — Flag Risks
 Before presenting the draft, check for and explicitly call out:
