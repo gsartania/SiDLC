@@ -42,11 +42,11 @@ SiDLC is a **structured, phased framework** that orchestrates multiple specializ
         ▼
  Phase 2 ─── Backend Agent ───────► Server Skeleton + DB
         ▼
- Phase 3 ─── Logic Agent ─────────► Completed src/ + tests ⛔ HALT: Human Reviews
+ Phase 3 ─── Logic Agent ─────────► Completed output/src/ + output/tests/ ⛔ HALT: Human Reviews
         ▼
- Phase 4 ─── Integration Agent ───► SKILL.md + configs
+ Phase 4 ─── Integration Agent ───► output/SKILL.md + configs
         ▼
- Phase 5 ─── QA Agent ────────────► test-report.md         ⛔ HALT: Human Launches
+ Phase 5 ─── QA Agent ────────────► output/test-report.md         ⛔ HALT: Human Launches
 ```
 
 ### Phase Details
@@ -57,8 +57,8 @@ SiDLC is a **structured, phased framework** that orchestrates multiple specializ
 | 1 — Design | Architect Agent | `output/technical-design.md` | ✅ |
 | 2 — Infrastructure | Backend Agent | Server code, DB, health check | — |
 | 3 — Logic | Logic Agent | Business logic, tests, `output/LOGIC.md` | ✅ |
-| 4 — Integration | Integration Agent | `SKILL.md`, `CHANGELOG.md` | — |
-| 5 — QA | QA Agent | `test-report.md` | ✅ |
+| 4 — Integration | Integration Agent | `output/SKILL.md`, `output/CHANGELOG.md` | — |
+| 5 — QA | QA Agent | `output/test-report.md` | ✅ |
 
 ---
 

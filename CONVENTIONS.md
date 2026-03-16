@@ -44,19 +44,23 @@ Default to **TypeScript** unless the PRD specifies Python or the project is data
 
 ```
 project-root/
-├── src/
-│   ├── index.ts         # Server entry point
-│   ├── db.ts            # Database connector
-│   ├── tools/           # One file per MCP tool or API route
-│   ├── services/        # Business logic (pure functions, no I/O)
-│   └── utils/           # Shared utility functions
-├── tests/
-│   └── *.test.ts        # Mirrors src/ structure
-├── scripts/             # Setup, migration, seed scripts
-├── .env.example         # Required env vars (no secrets)
-├── package.json
-├── tsconfig.json
-└── SKILL.md             # Agent usage instructions (Integration Agent output)
+├── output/              # All generated artifacts and code go here!
+│   ├── src/
+│   │   ├── index.ts         # Server entry point
+│   │   ├── db.ts            # Database connector
+│   │   ├── tools/           # One file per MCP tool or API route
+│   │   ├── services/        # Business logic (pure functions, no I/O)
+│   │   └── utils/           # Shared utility functions
+│   ├── tests/
+│   │   └── *.test.ts        # Mirrors output/src/ structure
+│   ├── scripts/             # Setup, migration, seed scripts
+│   ├── .env.example         # Required env vars (no secrets)
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── SKILL.md             # Agent usage instructions (Integration Agent output)
+├── .env                 # Ignored in version control
+└── input/               # Sourced from the human/Intake Agent
+    └── PRD.md
 ```
 
 ---
@@ -101,7 +105,7 @@ export class AppError extends Error {
 
 - Every **service function** must have at least one unit test.
 - Tests must cover: happy path, invalid input, edge cases (empty, null, out-of-range).
-- Test files live in `tests/`, mirroring `src/` structure.
+- Test files live in `output/tests/`, mirroring `output/src/` structure.
 - Run tests with: `npx vitest run` (TS) or `pytest` (Python).
 
 ---

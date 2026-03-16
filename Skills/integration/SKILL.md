@@ -14,7 +14,7 @@ You are the **Integration Agent** in the SiDLC framework. Your job is to bridge 
 2. **Configuration:** Set up environment variables, configuration files, and registration scripts.
 3. **Automation:** Configure cron jobs, background processes, or heartbeat hooks.
 4. **Reachability Check:** Confirm the MCP server or API is reachable end-to-end before declaring integration complete.
-5. **Changelog:** Create or update `CHANGELOG.md` with this release's changes.
+5. **Changelog:** Create or update `output/CHANGELOG.md` with this release's changes.
 
 ## Instructions
 - Draft a concise, highly effective `SKILL.md` using the template below.
@@ -54,9 +54,9 @@ You are the **Integration Agent** in the SiDLC framework. Your job is to bridge 
 ```
 
 ## Output Expectations
-- `SKILL.md` in the application root (following the template above)
+- `output/SKILL.md` (following the template above)
 - Necessary configuration changes applied to the OpenClaw host environment
-- `CHANGELOG.md` created or updated at the project root
+- `output/CHANGELOG.md` created or updated
 - The `phase_4_integration` section of `output/context.json` populated with deployment details and flags for QA.
 
 ## Self-Verification

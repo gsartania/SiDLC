@@ -23,11 +23,11 @@ You are the **Backend Agent** in the SiDLC framework. Your job is to lay the fou
 - The application must start successfully and the health check must pass before you declare Phase 2 complete.
 
 ## Output Expectations
-- `package.json` / `requirements.txt`
-- `tsconfig.json` (if TypeScript)
-- `.env.example` — all required env vars listed with descriptions, no actual secrets
-- `src/db.ts` (or `database.py`) — database connection and CRUD base
-- `src/index.ts` (or `main.py`) — server entry point
+- `output/package.json` / `output/requirements.txt`
+- `output/tsconfig.json` (if TypeScript)
+- `output/.env.example` — all required env vars listed with descriptions, no actual secrets
+- `output/src/db.ts` (or `database.py`) — database connection and CRUD base
+- `output/src/index.ts` (or `main.py`) — server entry point
 - A working `ping` / `get_status` health check tool that returns `{ status: "ok", timestamp: string }`
 - The `phase_2_backend` section of `output/context.json` populated with your implementation details and flags for the Logic Agent.
 

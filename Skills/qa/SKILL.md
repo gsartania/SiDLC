@@ -27,7 +27,7 @@ You are the **QA (Quality Assurance) Agent** in the SiDLC framework. Your job is
 
 ## Output Expectations
 
-Produce a `test-report.md` with the following structure:
+Produce an `output/test-report.md` with the following structure:
 
 ```md
 # Test Report — [Software Name]
@@ -61,5 +61,5 @@ Produce a `test-report.md` with the following structure:
 Append testing notes and the final approval status to the `phase_5_qa` section of `output/context.json`.
 
 ## Handoff
-Present `test-report.md` to the human. If approved: *"Phase 5 complete. Build approved for launch."*
+Present `output/test-report.md` to the human. If approved: *"Phase 5 complete. Build approved for launch."*
 If rejected: Clearly state which bugs must be resolved and which agent should fix them (Logic or Backend).

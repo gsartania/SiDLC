@@ -28,13 +28,13 @@ Phase 1: output/technical-design.md  ──────────────�
 Phase 2: Baseline Server Code (runs, connects to DB)
      │
      ▼
-Phase 3: Completed src/ (all PRD requirements met)  ► HALT: Human Reviews Logic
+Phase 3: Completed output/src/ (all PRD requirements met)  ► HALT: Human Reviews Logic
      │
      ▼
 Phase 4: SKILL.md + deployment configs
      │
      ▼
-Phase 5: test-report.md + Final Approval  ──────────► HALT: Human Launches
+Phase 5: output/test-report.md + Final Approval  ──────────► HALT: Human Launches
 ```
 
 ---
@@ -66,8 +66,8 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
 - **Actor:** Backend Agent
 - **Input:** `output/technical-design.md`, `CONVENTIONS.md`
 - **Tasks:**
-  1. Initialize the project repository (e.g., `package.json`, `tsconfig.json`).
-  2. Create `.env.example` with all required environment variables documented.
+  1. Initialize the project repository (e.g., `output/package.json`, `output/tsconfig.json`).
+  2. Create `output/.env.example` with all required environment variables documented.
   3. Implement the database connector and basic CRUD operations.
   4. Construct the server entry point (e.g., MCP server instance).
   5. Implement a `ping` / `get_status` health check tool.
@@ -83,7 +83,7 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
   3. Wire the business logic into the API/MCP interfaces created in Phase 2.
   4. Write unit tests for all service functions.
   5. Handle all error states defined in `output/technical-design.md`.
-- **Output:** Completed `src/` directory + `tests/` + `output/LOGIC.md` (design rationale).
+- **Output:** Completed `output/src/` directory + `output/tests/` + `output/LOGIC.md` (design rationale).
 - **Self-Verification:** The Logic Agent must run all tests and confirm they pass before handoff.
 - **⛔ HALT:** Human reviews the completed logic and signs off before integration.
 
@@ -95,8 +95,8 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
   2. Register the service/MCP server within the orchestrator environment.
   3. Configure any required cron jobs, heartbeat integrations, or environment variables.
   4. Verify the MCP server or API is reachable end-to-end.
-  5. Create or update `CHANGELOG.md`.
-- **Output:** `SKILL.md`, deployment scripts/configs, `CHANGELOG.md`.
+  5. Create or update `output/CHANGELOG.md`.
+- **Output:** `output/SKILL.md`, deployment scripts/configs, `output/CHANGELOG.md`.
 - **Self-Verification:** The Integration Agent must verify end-to-end reachability before handoff.
 
 ### Phase 5: Quality Assurance & Launch
@@ -108,8 +108,8 @@ Phase 5: test-report.md + Final Approval  ──────────► HALT
   3. Verify data persistence and error handling (including all error states from the catalog).
   4. Test edge cases: invalid inputs, missing files, empty states.
   5. Rate all bugs found by severity: `P0 (blocker) / P1 (major) / P2 (minor)`.
-  6. Present final `test-report.md` to the human.
-- **Output:** `test-report.md`, final deployment approval.
+  6. Present final `output/test-report.md` to the human.
+- **Output:** `output/test-report.md`, final deployment approval.
 - **⛔ HALT:** Human reviews the test report and approves the launch.
 
 ---
@@ -131,9 +131,9 @@ When the human issues a **`Start Phase N`** command, the orchestrator must follo
 | **`Start Phase 0`** | None. (Checks if `input/PRD.template.md` exists). |
 | **`Start Phase 1`** | `input/PRD.md` must exist and be human-approved. |
 | **`Start Phase 2`** | `output/technical-design.md` must exist and be human-approved. |
-| **`Start Phase 3`** | `src/` directory and basic server skeleton must exist. |
-| **`Start Phase 4`** | `src/` directory and `tests/` directory must be populated. `output/LOGIC.md` must exist. |
-| **`Start Phase 5`** | `SKILL.md` must exist at the project root. Application must be runnable. |
+| **`Start Phase 3`** | `output/src/` directory and basic server skeleton must exist. |
+| **`Start Phase 4`** | `output/src/` directory and `output/tests/` directory must be populated. `output/LOGIC.md` must exist. |
+| **`Start Phase 5`** | `output/SKILL.md` must exist. Application must be runnable. |
 
 If a prerequisite fails, the orchestrator must **abort** and tell the human which previous phase needs to be completed first.
 
