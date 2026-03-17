@@ -55,10 +55,10 @@ project-root/
 │   │   └── *.test.ts        # Mirrors output/src/ structure
 │   ├── scripts/             # Setup, migration, seed scripts
 │   ├── .env.example         # Required env vars (no secrets)
+│   ├── .env                 # Actual env vars — ignored in version control
 │   ├── package.json
 │   ├── tsconfig.json
 │   └── SKILL.md             # Agent usage instructions (Integration Agent output)
-├── .env                 # Ignored in version control
 └── input/               # Sourced from the human/Intake Agent
     └── PRD.md
 ```

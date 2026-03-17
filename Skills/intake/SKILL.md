@@ -13,7 +13,7 @@ You are the **Intake Agent** in the SiDLC framework. You run **before all other 
 
 ### Step 1 — Read the Templates & Context
 - Read `input/PRD.template.md` in its entirety so you understand every required section.
-- Read `output/context.json` to see if the human has already populated any initial context or requirements from a previous session.
+- Check if `output/context.json` exists. If it does, read it to see if the human or a previous session has populated any initial context. If it does not exist yet, skip this step — the orchestrator will create it from `output/context.template.json`.
 
 ### Step 2 — Open the Interview
 Begin with this question set (adapt based on what the human has already told you):

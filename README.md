@@ -10,7 +10,7 @@
 
 ## What Is SiDLC?
 
-SiDLC is a **structured, phased framework** that orchestrates multiple specialized AI agents to build software from a rough idea to a tested, deployable product. It is designed for use with advanced LLMs (Claude, Gemini, GPT-4) operating as an orchestrator — particularly within the [OpenClaw](https://github.com/gsartania) environment.
+SiDLC is a **structured, phased framework** that orchestrates multiple specialized AI agents to build software from a rough idea to a tested, deployable product. It is designed for use with advanced LLMs (Claude, Gemini, GPT-4) operating as an orchestrator — particularly within the OpenClaw environment.
 
 **Ideal for building:**
 - 🔌 MCP (Model Context Protocol) servers
@@ -57,7 +57,7 @@ SiDLC is a **structured, phased framework** that orchestrates multiple specializ
 | 1 — Design | Architect Agent | `output/technical-design.md` | ✅ |
 | 2 — Infrastructure | Backend Agent | Server code, DB, health check | — |
 | 3 — Logic | Logic Agent | Business logic, tests, `output/LOGIC.md` | ✅ |
-| 4 — Integration | Integration Agent | `output/SKILL.md`, `output/CHANGELOG.md` | — |
+| 4 — Integration | Integration Agent | `output/SKILL.md`, `output/CHANGELOG.md` | ✅ |
 | 5 — QA | QA Agent | `output/test-report.md` | ✅ |
 
 ---
@@ -65,14 +65,18 @@ SiDLC is a **structured, phased framework** that orchestrates multiple specializ
 ## Repository Structure
 
 ```
-SiDLCFramework/
+SiDLC/
 ├── SiDLCFramework.md          # The master framework specification
 ├── CONVENTIONS.md             # Shared coding standards for all agents
 ├── input/
 │   └── PRD.template.md        # Reusable PRD starter template
-├── output/                    # Agent-generated design artifacts
-│   ├── technical-design.md    # (Architect Agent output)
-│   └── LOGIC.md               # (Logic Agent output)
+├── output/                    # Generated artifacts go here (initially contains templates only)
+│   └── context.template.json  # Shared context template (copied → context.json at project start)
+│   # The following are generated at runtime by agents:
+│   # ├── technical-design.md  # (Architect Agent output — Phase 1)
+│   # ├── LOGIC.md             # (Logic Agent output — Phase 3)
+│   # ├── SKILL.md             # (Integration Agent output — Phase 4)
+│   # └── src/                 # (Backend + Logic Agent output — Phases 2–3)
 └── Skills/
     ├── intake/SKILL.md        # Phase 0 — Requirements gathering
     ├── architect/SKILL.md     # Phase 1 — Technical design

@@ -31,7 +31,7 @@ Phase 2: Baseline Server Code (runs, connects to DB)
 Phase 3: Completed output/src/ (all PRD requirements met)  ► HALT: Human Reviews Logic
      │
      ▼
-Phase 4: SKILL.md + deployment configs
+Phase 4: SKILL.md + deployment configs  ──────────────────► HALT: Human Approves SKILL
      │
      ▼
 Phase 5: output/test-report.md + Final Approval  ──────────► HALT: Human Launches
@@ -98,6 +98,7 @@ Phase 5: output/test-report.md + Final Approval  ──────────�
   5. Create or update `output/CHANGELOG.md`.
 - **Output:** `output/SKILL.md`, deployment scripts/configs, `output/CHANGELOG.md`.
 - **Self-Verification:** The Integration Agent must verify end-to-end reachability before handoff.
+- **⛔ HALT:** Human must review `output/SKILL.md` before proceeding — this artifact teaches the AI how to use the software and directly impacts operational safety.
 
 ### Phase 5: Quality Assurance & Launch
 - **Actor:** QA Agent
@@ -120,15 +121,16 @@ The SiDLC Framework is designed to be executed via simple commands from the huma
 
 When the human issues a **`Start Phase N`** command, the orchestrator must follow this exact sequence:
 
-1. **Check Prerequisites:** Verify the required input artifacts for that phase exist.
-2. **Execute:** Spawn the specific agent persona and execute the tasks in its `SKILL.md`.
-3. **Summarize & Halt:** When the agent finishes, display a summary of what was accomplished, present the key output artifact(s), and ask the human: *"Phase N is complete. Shall I proceed to the next phase?"*
+1. **Initialize Context:** If `output/context.json` does not exist, copy `output/context.template.json` → `output/context.json` and populate `project_name` and `created_at`.
+2. **Check Prerequisites:** Verify the required input artifacts for that phase exist.
+3. **Execute:** Spawn the specific agent persona and execute the tasks in its `SKILL.md`.
+4. **Summarize & Halt:** When the agent finishes, display a summary of what was accomplished, present the key output artifact(s), and ask the human: *"Phase N is complete. Shall I proceed to the next phase?"*
 
 ### Phase-Specific Prerequisites
 
 | Command | Prerequisite Checks Before Running |
 |---------|------------------------------------|
-| **`Start Phase 0`** | None. (Checks if `input/PRD.template.md` exists). |
+| **`Start Phase 0`** | `input/PRD.template.md` must exist. `output/context.json` will be auto-created from `output/context.template.json` if missing. |
 | **`Start Phase 1`** | `input/PRD.md` must exist and be human-approved. |
 | **`Start Phase 2`** | `output/technical-design.md` must exist and be human-approved. |
 | **`Start Phase 3`** | `output/src/` directory and basic server skeleton must exist. |
