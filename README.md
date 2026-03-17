@@ -67,6 +67,7 @@ SiDLC is a **structured, phased framework** that orchestrates multiple specializ
 ```
 SiDLC/
 ├── SiDLCFramework.md          # The master framework specification
+├── ORCHESTRATOR.md            # System prompt to turn an LLM into the project manager
 ├── CONVENTIONS.md             # Shared coding standards for all agents
 ├── input/
 │   └── PRD.template.md        # Reusable PRD starter template
@@ -100,16 +101,17 @@ cp input/PRD.template.md input/PRD.md
 
 ### 2. Run the Framework
 
-Instruct your AI orchestrator using simple commands:
+Instruct your AI by providing it the [`ORCHESTRATOR.md`](ORCHESTRATOR.md) file. This gives the AI its system prompt to act as the project manager.
+
+Then, issue the simple command:
 
 > *"Start Phase 0"*
 
-The orchestrator will:
+The AI Orchestrator will:
 1. Check prerequisites (e.g., does `output/technical-design.md` exist for Phase 2?)
-2. Spawn the specific specialist agent for that phase.
+2. Read the specific specialist prompt from `Skills/<agent>/SKILL.md` for that phase.
 3. Automatically manage the shared `output/context.json` file.
-4. When finished, show you a summary of what was built and ask:
-   *"Phase complete. Shall I proceed to the next phase?"*
+4. When finished, show you a summary of what was built and halt for your approval.
 
 ### 3. Approve and Continue
 

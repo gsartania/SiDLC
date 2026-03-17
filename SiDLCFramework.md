@@ -8,8 +8,9 @@ This document defines the SiDLC (Silvia Software Development Life Cycle), a mult
 
 ## Core Philosophy
 1. **Human-in-the-Loop (HITL):** The human acts as the Product Owner and final approval authority.
-2. **Agent Specialization:** Tasks are broken down and delegated to specialized sub-agents with narrow scopes to reduce hallucination and improve code quality.
-3. **Artifact-Driven:** Each phase produces a concrete, verifiable artifact (e.g., Schema, Code, SKILL.md) before moving to the next.
+2. **LLM Orchestration:** The pipeline is managed by an AI acting under the `ORCHESTRATOR.md` system prompt, removing the need for local automation scripts.
+3. **Agent Specialization:** Tasks are broken down and delegated to specialized sub-agents with narrow scopes.
+4. **Artifact-Driven:** Each phase produces a concrete, verifiable artifact before moving to the next.
 
 ---
 
@@ -117,14 +118,16 @@ Phase 5: output/test-report.md + Final Approval  ──────────�
 
 ## Orchestrator Commands & Execution
 
-The SiDLC Framework is designed to be executed via simple commands from the human to the orchestrator (e.g., "Start Phase 0"). 
+The SiDLC Framework is designed to be executed via simple commands from the human to an AI agent (e.g., Claude, ChatGPT) acting as the Orchestrator. 
 
-When the human issues a **`Start Phase N`** command, the orchestrator must follow this exact sequence:
+**Setup:** To begin a project, provide your AI with the `ORCHESTRATOR.md` file. It will adopt the persona of the project manager.
+
+When the human issues a **`Start Phase N`** command, the Orchestrator AI must follow this sequence:
 
 1. **Initialize Context:** If `output/context.json` does not exist, copy `output/context.template.json` → `output/context.json` and populate `project_name` and `created_at`.
 2. **Check Prerequisites:** Verify the required input artifacts for that phase exist.
-3. **Execute:** Spawn the specific agent persona and execute the tasks in its `SKILL.md`.
-4. **Summarize & Halt:** When the agent finishes, display a summary of what was accomplished, present the key output artifact(s), and ask the human: *"Phase N is complete. Shall I proceed to the next phase?"*
+3. **Execute:** Read the specific agent persona from `Skills/<agent>/SKILL.md` and execute its instructions.
+4. **Summarize & Halt:** When finished, display a summary of what was accomplished, present the key output artifact(s), and ask the human: *"Phase N is complete. Shall I proceed to the next phase?"*
 
 ### Phase-Specific Prerequisites
 
@@ -137,7 +140,7 @@ When the human issues a **`Start Phase N`** command, the orchestrator must follo
 | **`Start Phase 4`** | `output/src/` directory and `output/tests/` directory must be populated. `output/LOGIC.md` must exist. |
 | **`Start Phase 5`** | `output/SKILL.md` must exist. Application must be runnable. |
 
-If a prerequisite fails, the orchestrator must **abort** and tell the human which previous phase needs to be completed first.
+If a prerequisite fails, the Orchestrator AI must **abort** and tell the human which previous phase needs to be completed first.
 
 ---
 
