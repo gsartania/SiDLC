@@ -1,1 +1,15 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Database files
+*.sqlite
+
+# Build artifacts
+dist/
+build/
+
+# IDE / tooling
 .codemie/
